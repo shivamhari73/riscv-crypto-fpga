@@ -1,26 +1,4 @@
-//============================================================================
-// sha1_regif.v  -  Memory-mapped register interface (CPU side)
-//
-//  Bus protocol (PicoRV32-native style, easy to adapt to Wishbone/AXI-Lite):
-//     bus_valid  : request (hold until bus_ready)
-//     bus_we     : 1 = write, 0 = read
-//     bus_addr   : byte offset within the peripheral (word aligned)
-//     bus_ready  : 1-cycle pulse, access done; bus_rdata valid in that cycle
-//
-//  Register map (byte offsets)
-//   0x00 CTRL    W : [0] INIT      start a new message (clears ERR/DONE)
-//                    [1] FINISH    end of message, pad & hash the rest
-//                    [9:8] LASTBYTES  valid bytes in LASTW (0..3), used w/ FINISH
-//                    [4] IRQ_EN    interrupt enable (stored)
-//                R : [4] IRQ_EN
-//   0x04 STATUS  R : [0] READY  can accept WDATA / FINISH
-//                    [1] BUSY   blocks being hashed
-//                    [2] DONE   digest valid
-//                    [3] ERR    sticky: write while not READY (cleared by INIT)
-//   0x08 WDATA   W : push one full 32-bit word (first byte in bits 31:24)
-//   0x0C LASTW   W : residual bytes, left aligned (write before FINISH)
-//   0x20..0x30 DIGEST0..DIGEST4  R : H0..H4  (valid when DONE=1)
-//========================================================================
+
 module sha1_regif (
     input  wire         clk,
     input  wire         rst_n,
