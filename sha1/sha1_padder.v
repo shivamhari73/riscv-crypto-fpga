@@ -1,18 +1,6 @@
 //============================================================================
 // sha1_padder.v  -  Message padding + 512-bit block assembly + sequencing
-//
-//  Accepts the message as 32-bit big-endian words (first byte in bits 31:24)
-//  and performs the FIPS 180-4 padding:
-//        message | 0x80 | 0...0 | 64-bit big-endian bit length
-//  Complete 512-bit blocks are handed to sha1_core (init for the first block,
-//  next for the rest).  Handles every length, including the cases that need
-//  an extra block (residual word index 14/15, or message length multiple of 64B).
-//
-//  Sequence:   start -> {word_valid ...} -> fin_valid -> ... -> done
-//  fin_data   : last (partial) word, left aligned (first byte in bits 31:24)
-//  fin_nbytes : number of valid bytes in fin_data (0..3)
-//  Inputs word_valid / fin_valid must only be asserted while in_ready = 1.
-//============================================================================
+
 module sha1_padder (
     input  wire         clk,
     input  wire         rst_n,
