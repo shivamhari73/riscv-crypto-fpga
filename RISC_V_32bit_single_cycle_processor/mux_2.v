@@ -22,17 +22,15 @@
 
 module mux_2(
     input [31:0] rs2d,
-    input [31:0] imm, rdd_out,
+    input [31:0] imm,
     input ALUsrc,
-    input forward_b,
     output reg [31:0] b
     );
     
     always @ (*) begin
-        case({forward_b, ALUsrc}) 
-            2'b00: b = rs2d;
-            2'b01: b = imm;
-            2'b10: b = rdd_out;
+        case(ALUsrc) 
+            1'b0: b = rs2d;
+            1'b1: b = imm;
         default: b = 32'b0;
         endcase
         
