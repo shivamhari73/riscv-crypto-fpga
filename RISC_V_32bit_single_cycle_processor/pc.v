@@ -23,7 +23,6 @@
 module pc(
     input clk,
     input reset,
-    input stall,
     input [31:0] pc_next,
     output reg [31:0] pc
 
